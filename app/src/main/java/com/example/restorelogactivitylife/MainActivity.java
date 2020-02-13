@@ -65,10 +65,13 @@ public class MainActivity extends AppCompatActivity {
                 listView.setAdapter(listContentAdapter);
             }
         });
-        ArrayList<Integer> list = savedInstanceState.getIntegerArrayList(MY_PREFERENCES);
-        for (int i = 0; i < list.size();i++){
-            arrayList.remove(i);
+        if(!(savedInstanceState ==null)){
+            ArrayList<Integer> list = savedInstanceState.getIntegerArrayList(MY_PREFERENCES);
+            for (int i = 0; i < list.size();i++){
+                arrayList.remove(i);
+            }
         }
+
     }
 
     private void initSharedPreferences() {
