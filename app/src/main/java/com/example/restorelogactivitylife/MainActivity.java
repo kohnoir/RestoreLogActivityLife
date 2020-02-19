@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,9 +25,8 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     public static final String MY_PREFERENCES = "MyPrefs";
     SwipeRefreshLayout swipeLayout;
-    ArrayList<Integer>  intMap;
-    ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
-    HashMap<String, String> map;
+    ArrayList<Integer>  intMap = new ArrayList<>();
+    ArrayList<String> arrayList = new ArrayList<>();
     BaseAdapter listContentAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,18 +34,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listView = findViewById(R.id.zone_list);
         initSharedPreferences();
+        String [] values =  prepareContent();
+        arrayList.addAll(Arrays.asList(values));
 
-        map = new HashMap<>();
-        for (int i = 0; i < prepareContent().length; i++) {
-            String string = String.valueOf(prepareContent().length);
-            map.put(string, prepareContent()[i]);
-            arrayList.add(map);
-        }
-        String[] values = prepareContent();
 
-        listContentAdapter = createAdapter(values);
+
+        listContentAdapter = createAdapter(arrayList);
         listView.setAdapter(listContentAdapter);
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -53,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                 intMap.add(position);
                 arrayList.remove(position);
                 listContentAdapter.notifyDataSetChanged();
-                listView.setAdapter(listContentAdapter);
             }
         });
         swipeLayout = findViewById(R.id.swiperefresh);
@@ -61,8 +55,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 swipeLayout.setRefreshing(false);
+                String [] value =  prepareContent();
+                arrayList.addAll(Arrays.asList(value));
                 listContentAdapter.notifyDataSetChanged();
-                listView.setAdapter(listContentAdapter);
             }
         });
         if(!(savedInstanceState ==null)){
@@ -84,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @NonNull
-    private BaseAdapter createAdapter(String[] values) {
+    private BaseAdapter createAdapter(ArrayList<String> values) {
         return new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, values);
     }
 
