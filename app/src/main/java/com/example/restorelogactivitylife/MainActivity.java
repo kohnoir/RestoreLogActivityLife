@@ -1,8 +1,5 @@
 package com.example.restorelogactivitylife;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,17 +14,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView listView;
-    SharedPreferences sharedPreferences;
     public static final String MY_PREFERENCES = "MyPrefs";
-    SwipeRefreshLayout swipeLayout;
-    ArrayList<String> arrayList = new ArrayList<>();
-    ArrayList<String> array = new ArrayList<>();
-    BaseAdapter listContentAdapter;
+    private SwipeRefreshLayout swipeLayout;
+    private ArrayList<String> arrayList = new ArrayList<>();
+    private ArrayList<String> array = new ArrayList<>();
+    private BaseAdapter listContentAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
